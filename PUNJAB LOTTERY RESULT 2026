@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Check Result</title>
+</head>
+<body style="text-align:center;font-family:Arial;">
+
+<h2>Check Your Lottery Result</h2>
+
+<input type="text" id="mobile" placeholder="Enter Mobile Number">
+<br><br>
+<button onclick="check()">Check Now</button>
+
+<div id="result"></div>
+
+<script>
+function check() {
+    let number = document.getElementById("mobile").value;
+
+    fetch("YOUR_GOOGLE_SHEET_API_LINK")
+    .then(res => res.json())
+    .then(data => {
+        let found = data.find(x => x.Mobile == number);
+
+        if(found){
+            document.getElementById("result").innerHTML =
+            `<h3>Name: ${found.Name}</h3>
+             <p>Ticket: ${found.Ticket}</p>
+             <p>Amount: ₹${found.Amount}</p>`;
+        } else {
+            document.getElementById("result").innerHTML = "No Result Found";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
